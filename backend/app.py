@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from models import db, User
+<<<<<<< HEAD
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_cors import CORS
 from datetime import datetime
@@ -39,11 +40,20 @@ with app.app_context():
 def health():
     return jsonify({"status": "OK", "message": "UpGuard API is running"}), 200
 
+=======
+from flask_jwt_extended import JWTManager, create_access_token
+
+app = Flask(__name__)
+
+jwt = JWTManager(app)
+
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
 @app.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
     email = data.get("email")
     password = data.get("password")
+<<<<<<< HEAD
     full_name = data.get("full_name")
     organization = data.get("organization")
     phone = data.get("phone")
@@ -67,10 +77,19 @@ def register():
     db.session.commit()
 
     return jsonify({"message": "User registered successfully", "user": new_user.to_dict()}), 201
+=======
+
+    new_user = User(email=email, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"message": "User registered successfully"}), 201
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
 
 
 @app.route("/login", methods=["POST"])
 def login():
+<<<<<<< HEAD
     data = request.get_json()
     email = data.get("email")
     password = data.get("password")
@@ -135,3 +154,6 @@ def update_profile():
 if __name__ == "__main__":
     port = int(os.environ.get("FLASK_PORT", 5000))
     app.run(debug=True, host="0.0.0.0", port=port)
+=======
+    return jsonify({"message": "Login route working"}), 200
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186

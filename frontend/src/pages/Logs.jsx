@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import "../styles/Logs.css";
 import API_URL from "../config";
@@ -58,6 +59,52 @@ const Logs = () => {
     return status === "Success" ? '#00ffae' : '#ff4d4d';
   };
 
+=======
+import React, { useState } from "react";
+import "../styles/Logs.css";
+
+const Logs = () => {
+  const [search, setSearch] = useState("");
+
+  const logs = [
+    {
+      id: 1,
+      time: "20 Feb 2026 10:32 AM",
+      user: "johndoe@gmail.com",
+      event: "Admin Login Attempt",
+      ip: "103.89.45.12",
+      device: "Windows 11",
+      status: "Success",
+      risk: "Low"
+    },
+    {
+      id: 2,
+      time: "20 Feb 2026 09:10 AM",
+      user: "analyst@corp.com",
+      event: "File Download",
+      ip: "192.168.0.12",
+      device: "MacOS",
+      status: "Success",
+      risk: "Medium"
+    },
+    {
+      id: 3,
+      time: "20 Feb 2026 08:48 AM",
+      user: "employee@corp.com",
+      event: "VPN Login",
+      ip: "45.33.12.77",
+      device: "Linux",
+      status: "Blocked",
+      risk: "High"
+    }
+  ];
+
+  const filteredLogs = logs.filter((log) =>
+    log.user.toLowerCase().includes(search.toLowerCase()) ||
+    log.event.toLowerCase().includes(search.toLowerCase())
+  );
+
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
   return (
     <div className="logs-wrapper">
 
@@ -75,8 +122,11 @@ const Logs = () => {
         />
       </div>
 
+<<<<<<< HEAD
       {error && <div style={{ color: '#ff4d4d', padding: '10px', marginBottom: '10px' }}>Error: {error}</div>}
 
+=======
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
       <div className="logs-table glass">
         <table>
           <thead>
@@ -92,6 +142,7 @@ const Logs = () => {
           </thead>
 
           <tbody>
+<<<<<<< HEAD
             {loading ? (
               <tr>
                 <td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>
@@ -123,6 +174,23 @@ const Logs = () => {
                 </td>
               </tr>
             )}
+=======
+            {filteredLogs.map((log) => (
+              <tr key={log.id}>
+                <td>{log.time}</td>
+                <td>{log.user}</td>
+                <td>{log.event}</td>
+                <td>{log.ip}</td>
+                <td>{log.device}</td>
+                <td className={log.status === "Blocked" ? "blocked" : "success"}>
+                  {log.status}
+                </td>
+                <td className={`risk-${log.risk.toLowerCase()}`}>
+                  {log.risk}
+                </td>
+              </tr>
+            ))}
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
           </tbody>
 
         </table>

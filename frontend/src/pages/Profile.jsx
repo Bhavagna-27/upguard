@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import "../styles/Profile.css";
 import API_URL from "../config";
@@ -96,6 +97,12 @@ const Profile = () => {
     return <div className="profile-wrapper">Error: {error}</div>;
   }
 
+=======
+import React from "react";
+import "../styles/Profile.css";
+
+const Profile = () => {
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
   return (
     <div className="profile-wrapper">
 
@@ -103,14 +110,22 @@ const Profile = () => {
       <div className="profile-card glass">
 
         <div className="profile-header">
+<<<<<<< HEAD
           <div className="profile-avatar">{getInitials(user?.full_name)}</div>
           <div>
             <h2>{user?.full_name || "User"}</h2>
             <p>{user?.role || "Employee"}</p>
+=======
+          <div className="profile-avatar">JD</div>
+          <div>
+            <h2>John Doe</h2>
+            <p>Security Administrator</p>
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
           </div>
         </div>
 
         <div className="profile-details">
+<<<<<<< HEAD
           <div><strong>Organization:</strong> {user?.organization || "N/A"}</div>
           <div><strong>Email:</strong> {user?.email || "N/A"}</div>
           <div><strong>Phone:</strong> {user?.phone || "N/A"}</div>
@@ -154,6 +169,13 @@ const Profile = () => {
               {user?.role || "Employee"}
             </p>
           </div>
+=======
+          <div><strong>Organization:</strong> UpGuard Corp</div>
+          <div><strong>Email:</strong> johndoe@gmail.com</div>
+          <div><strong>Phone:</strong> +91 9876543210</div>
+          <div><strong>Employee ID:</strong> UG-SEC-1024</div>
+          <div><strong>Clearance Level:</strong> Level 4 - Critical Access</div>
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
         </div>
 
       </div>
@@ -173,8 +195,13 @@ const Profile = () => {
 
         <div className="security-card glass">
           <h3>Last Login</h3>
+<<<<<<< HEAD
           <p>{user?.last_login ? new Date(user.last_login).toLocaleString() : "First login"}</p>
           <p>Location: {user?.organization ? "Office" : "Remote"}</p>
+=======
+          <p>20 Feb 2026 — 10:42 AM</p>
+          <p>Location: Hyderabad, IN</p>
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
         </div>
 
         <div className="security-card glass">

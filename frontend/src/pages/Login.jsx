@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import "../styles/Login.css";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import API_URL from "../config";
+=======
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+<<<<<<< HEAD
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+=======
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
 
   const isGmail = email.endsWith("@gmail.com");
 
@@ -38,6 +44,7 @@ const Login = () => {
 
   const isFormValid = isGmail && isPasswordValid;
 
+<<<<<<< HEAD
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isFormValid) return;
@@ -97,6 +104,19 @@ const Login = () => {
       console.error("Connection error:", err);
       setError("Failed to connect to server: " + err.message);
       setLoading(false);
+=======
+  const handleSubmit = (e) => {
+    e.preventDefault();
+     if (isFormValid) {
+    const generatedOTP = Math.floor(100000 + Math.random() * 900000);
+    localStorage.setItem("otp", generatedOTP);
+    localStorage.setItem("otpTime", Date.now());
+
+    console.log("Generated OTP:", generatedOTP); // For now visible in console
+
+    navigate("/otp");
+   
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
     }
   };
 
@@ -147,6 +167,7 @@ const Login = () => {
           </div>
 
           {/* STRENGTH BAR */}
+<<<<<<< HEAD
           {password && (
             <div
               style={{
@@ -173,17 +194,32 @@ const Login = () => {
           {/* BUTTON */}
           <button type="submit" disabled={!isFormValid || loading}>
             {loading ? "Logging in..." : "Request OTP"}
+=======
+          
+
+          {/* BUTTON */}
+          <button type="submit" disabled={!isFormValid}>
+            Request OTP
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
           </button>
         </form>
 
         <div className="signup-section">
           <span>Don't have an account?</span>
           <span
+<<<<<<< HEAD
             className="signup-link"
             onClick={() => navigate("/signup")}
           >
             Sign Up
           </span>
+=======
+  className="signup-link"
+  onClick={() => navigate("/signup")}
+>
+  Sign Up
+</span>
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
         </div>
       </div>
     </div>

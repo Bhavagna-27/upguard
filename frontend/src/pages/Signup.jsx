@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
+<<<<<<< HEAD
 import API_URL from "../config";
+=======
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -58,7 +61,11 @@ const Signup = () => {
     return strongPassword.test(password);
   };
 
+<<<<<<< HEAD
   const handleSubmit = async (e) => {
+=======
+  const handleSubmit = (e) => {
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
     e.preventDefault();
 
     if (!form.email.endsWith("@gmail.com")) {
@@ -83,6 +90,7 @@ const Signup = () => {
       return;
     }
 
+<<<<<<< HEAD
     try {
       console.log("Registering at:", `${API_URL}/register`);
       const response = await fetch(`${API_URL}/register`, {
@@ -132,6 +140,11 @@ const Signup = () => {
       console.error("Registration error:", err);
       setError("Failed to connect to server: " + err.message);
     }
+=======
+    setError("");
+    alert("Account Created Successfully 🚀");
+    navigate("/");
+>>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
   };
 
   return (

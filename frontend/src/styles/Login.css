@@ -1,0 +1,343 @@
+/* ================= RESET ================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================= BACKGROUND ================= */
+
+.login-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 153, 255, 0.35), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(0, 102, 255, 0.25), transparent 40%),
+    radial-gradient(circle at center, #000814 0%, #000000 85%);
+}
+
+/* Particles Layer */
+.particles-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none; /* FIX CLICK ISSUE */
+}
+
+/* ================= PREMIUM GLASS CARD ================= */
+
+.login-card {
+  position: relative;
+  z-index: 2;
+  width: 430px;
+  padding: 40px 35px;
+  border-radius: 24px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(0, 60, 150, 0.55),
+    rgba(0, 90, 255, 0.35)
+  );
+
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+
+  border: 1px solid rgba(0, 153, 255, 0.3);
+
+  box-shadow:
+    0 0 80px rgba(0, 119, 255, 0.35),
+    inset 0 0 40px rgba(0, 153, 255, 0.15);
+
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  transition: 0.4s ease;
+}
+
+/* Sparkle INSIDE card but not blocking clicks */
+.login-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none; /* FIXED */
+
+  background-image:
+    radial-gradient(2px 2px at 50px 80px, rgba(0,153,255,0.6), transparent),
+    radial-gradient(1.5px 1.5px at 200px 150px, rgba(0,153,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 300px 250px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(2px 2px at 400px 120px, rgba(0,153,255,0.5), transparent);
+
+  animation: sparkle 8s linear infinite alternate;
+  opacity: 0.4;
+}
+
+@keyframes sparkle {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-30px); }
+}
+
+.login-card:hover {
+  box-shadow:
+    0 0 100px rgba(0, 119, 255, 0.55),
+    inset 0 0 50px rgba(0, 153, 255, 0.25);
+}
+
+/* ================= BRANDING ================= */
+
+.brand-section {
+  text-align: center;
+}
+
+.logo-glow {
+  font-size: 45px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 20px #00aaff);
+}
+
+.brand-name {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.tagline {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* ================= INPUTS ================= */
+
+.login-card input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 153, 255, 0.4);
+
+  background: rgba(0, 102, 255, 0.15);
+  color: white;
+  font-size: 14px;
+
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.login-card input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login-card input:focus {
+  border: 1px solid rgba(0, 153, 255, 0.9);
+  background: rgba(0, 153, 255, 0.25);
+  box-shadow: 0 0 20px rgba(0, 153, 255, 0.5);
+}
+
+/* ================= RED GLASS BUTTON ================= */
+
+.login-card button {
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 0, 70, 0.6);
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 70, 0.5),
+    rgba(255, 60, 100, 0.35)
+  );
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.login-card button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 35px rgba(255, 0, 70, 0.7);
+}
+
+/* ================= SIGNUP ================= */
+
+.signup-section {
+  margin-top: 5px;
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.signup-section a {
+  color: #00aaff;
+  margin-left: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.signup-section a:hover {
+  text-shadow: 0 0 12px #00aaff;
+}
+
+.error {
+  color: #ff4d6d;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* FORM STRUCTURE */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* VALIDATION BORDERS */
+.valid-input {
+  border: 1px solid #00ff88 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+.invalid-input {
+  border: 1px solid #ff4d4d !important;
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+}
+
+/* PASSWORD WRAPPER */
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-eye {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* STRENGTH BAR */
+.strength-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.strength-bar {
+  height: 6px;
+  flex: 1;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+
+/* DISABLED BUTTON */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dropdown {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: white;
+  margin-bottom: 15px;
+}
+
+.dropdown option {
+  background: #0b2c66;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+
+  width: fit-content;
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.signup-link {
+  color: #00aaff;
+  cursor: pointer;        /* 👈 THIS fixes I-cursor */
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.signup-link:hover {
+  text-shadow: 0 0 10px #00aaff;
+  color: #38b6ff;
+}
+
+.terms span
+{
+  white-space:nowrap;
+}
+
+.strength-container {
+  margin-top: 8px;
+}
+
+.strength-bar {
+  height: 6px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.strength-1 {
+  width: 20%;
+  background: red;
+}
+
+.strength-2 {
+  width: 40%;
+  background: orange;
+}
+
+.strength-3 {
+  width: 60%;
+  background: yellow;
+}
+
+.strength-4 {
+  width: 80%;
+  background: #00aaff;
+}
+
+.strength-5 {
+  width: 100%;
+  background: #00ffcc;
+}

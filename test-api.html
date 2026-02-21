@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpGuard API Connection Test</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0a0e27;
+            color: #00ff88;
+        }
+        h1 { color: #00aaff; }
+        .test-box {
+            background: #1a1f3a;
+            border: 2px solid #00ff88;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { color: #00ff88; }
+        .error { color: #ff4d4d; }
+        .info { color: #00aaff; }
+        button {
+            background: #00ff88;
+            color: #0a0e27;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        button:hover { opacity: 0.8; }
+        .output {
+            background: #0a0e27;
+            border: 1px solid #00ff88;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛡️ UpGuard API Connection Test</h1>
+    
+    <div class="test-box">
+        <h2>Backend Connection Status</h2>
+        <p id="status" class="info">Initializing...</p>
+        <p id="details"></p>
+        <button onclick="testBackend()">Test Backend</button>
+        <button onclick="testLogin()">Test Login Endpoint</button>
+        <button onclick="testRegister()">Test Register Endpoint</button>
+        <button onclick="clearLog()">Clear Log</button>
+    </div>
+
+    <div class="test-box">
+        <h2>API URL Configuration</h2>
+        <p id="apiUrl" class="info"></p>
+    </div>
+
+    <div class="test-box">
+        <h2>Log Output</h2>
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:5000";
+        
+        function log(message, type = "info") {
+            const output = document.getElementById("output");
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === "success" ? "success" : type === "error" ? "error" : "info";
+            output.innerHTML += `<p class="${className}">[${timestamp}] ${message}</p>`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById("output").innerHTML = "";
+        }
+
+        function updateStatus(message, type = "info") {
+            document.getElementById("status").className = type;
+            document.getElementById("status").textContent = message;
+            log(message, type);
+        }
+
+        async function testBackend() {
+            try {
+                log("Testing backend health check...", "info");
+                updateStatus("Testing connection...", "info");
+                
+                const response = await fetch(`${API_URL}/`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    updateStatus("✅ Backend Connected!", "success");
+                    log(`Response: ${JSON.stringify(data)}`, "success");
+                    document.getElementById("details").innerHTML = `Backend is running at: <strong>${API_URL}</strong>`;
+                } else {
+                    updateStatus(`❌ Backend Error: ${response.status}`, "error");
+                    log(`Status: ${response.status}`, "error");
+                }
+            } catch (error) {
+                updateStatus("❌ Failed to connect to backend", "error");
+                log(`Error: ${error.message}`, "error");
+                log(`Make sure backend is running at ${API_URL}`, "error");
+            }
+        }
+
+        async function testLogin() {
+            try {
+                log("Testing login endpoint...", "info");
+                const testData = {
+                    email: "test@gmail.com",
+                    password: "Test@1234"
+                };
+
+                const response = await fetch(`${API_URL}/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(testData)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    updateStatus("✅ Login endpoint working!", "success");
+                    log(`Login Response: ${JSON.stringify(data, null, 2)}`, "success");
+                } else {
+                    updateStatus("⚠️ Login endpoint returned error", "error");
+                    log(`Error: ${JSON.stringify(data)}`, "error");
+                }
+            } catch (error) {
+                updateStatus("❌ Login test failed", "error");
+                log(`Error: ${error.message}`, "error");
+            }
+        }
+
+        async function testRegister() {
+            try {
+                log("Testing register endpoint...", "info");
+                const testData = {
+                    full_name: "Test User",
+                    email: "test@gmail.com",
+                    password: "Test@1234",
+                    organization: "Test Corp",
+                    phone: "+1234567890",
+                    role: "employee"
+                };
+
+                const response = await fetch(`${API_URL}/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(testData)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    updateStatus("✅ Register endpoint working!", "success");
+                    log(`Register Response: ${JSON.stringify(data, null, 2)}`, "success");
+                } else {
+                    updateStatus("⚠️ Register endpoint returned error", "error");
+                    log(`Error: ${JSON.stringify(data)}`, "error");
+                }
+            } catch (error) {
+                updateStatus("❌ Register test failed", "error");
+                log(`Error: ${error.message}`, "error");
+            }
+        }
+
+        // Initialize
+        document.getElementById("apiUrl").textContent = `API URL: ${API_URL}`;
+        testBackend();
+    </script>
+</body>
+</html>

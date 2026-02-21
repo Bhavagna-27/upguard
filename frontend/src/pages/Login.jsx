@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import "../styles/Login.css";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import API_URL from "../config";
-=======
->>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-<<<<<<< HEAD
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-=======
->>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
 
   const isGmail = email.endsWith("@gmail.com");
 
@@ -44,7 +38,6 @@ const Login = () => {
 
   const isFormValid = isGmail && isPasswordValid;
 
-<<<<<<< HEAD
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isFormValid) return;
@@ -73,21 +66,25 @@ const Login = () => {
         return;
       }
 
+      // Support both `access_token` and `token` response fields
+      const token = data.access_token || data.token || data.accessToken || null;
+
       // Store token and user data
+      const userObj = data.user || data.user_data || {};
       const fullUserData = {
-        id: data.user.id,
-        email: data.user.email,
-        full_name: data.user.full_name,
-        organization: data.user.organization,
-        phone: data.user.phone,
-        role: data.user.role,
-        employee_id: data.user.employee_id,
-        clearance_level: data.user.clearance_level,
-        last_login: data.user.last_login
+        id: userObj.id || email,
+        email: userObj.email || email,
+        full_name: userObj.full_name || userObj.fullName || "",
+        organization: userObj.organization || "",
+        phone: userObj.phone || "",
+        role: userObj.role || "user",
+        employee_id: userObj.employee_id || userObj.employeeId || "",
+        clearance_level: userObj.clearance_level || userObj.clearanceLevel || "Level 2 - Standard Access",
+        last_login: userObj.last_login || null,
       };
-      
+
       console.log("Login data to store:", fullUserData);
-      localStorage.setItem("access_token", data.access_token);
+      if (token) localStorage.setItem("access_token", token);
       localStorage.setItem("user", JSON.stringify(fullUserData));
       localStorage.setItem("email", email);
 
@@ -102,21 +99,8 @@ const Login = () => {
       navigate("/otp");
     } catch (err) {
       console.error("Connection error:", err);
-      setError("Failed to connect to server: " + err.message);
+      setError("Failed to connect to server: " + (err.message || err));
       setLoading(false);
-=======
-  const handleSubmit = (e) => {
-    e.preventDefault();
-     if (isFormValid) {
-    const generatedOTP = Math.floor(100000 + Math.random() * 900000);
-    localStorage.setItem("otp", generatedOTP);
-    localStorage.setItem("otpTime", Date.now());
-
-    console.log("Generated OTP:", generatedOTP); // For now visible in console
-
-    navigate("/otp");
-   
->>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
     }
   };
 
@@ -167,7 +151,6 @@ const Login = () => {
           </div>
 
           {/* STRENGTH BAR */}
-<<<<<<< HEAD
           {password && (
             <div
               style={{
@@ -194,32 +177,17 @@ const Login = () => {
           {/* BUTTON */}
           <button type="submit" disabled={!isFormValid || loading}>
             {loading ? "Logging in..." : "Request OTP"}
-=======
-          
-
-          {/* BUTTON */}
-          <button type="submit" disabled={!isFormValid}>
-            Request OTP
->>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
           </button>
         </form>
 
         <div className="signup-section">
           <span>Don't have an account?</span>
           <span
-<<<<<<< HEAD
             className="signup-link"
             onClick={() => navigate("/signup")}
           >
             Sign Up
           </span>
-=======
-  className="signup-link"
-  onClick={() => navigate("/signup")}
->
-  Sign Up
-</span>
->>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
         </div>
       </div>
     </div>

@@ -65,10 +65,17 @@ def add_activity_log(email, event, status="Success", risk="Low"):
     print(f"  [+] Activity logged: {email} - {event}")
     return log_entry
 
-# Enable CORS for all origins during development
+# Enable CORS for development frontends (include dynamic dev ports)
 CORS(app, resources={
     r"/*": {
-        "origins": ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173", "http://127.0.0.1:5174"],
+        "origins": [
+            "http://localhost:5173",
+            "http://localhost:5174",
+            "http://localhost:5177",
+            "http://127.0.0.1:5173",
+            "http://127.0.0.1:5174",
+            "http://127.0.0.1:5177"
+        ],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"],
         "supports_credentials": True

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
-<<<<<<< HEAD
 import API_URL from "../config";
-=======
->>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -20,17 +17,34 @@ const Signup = () => {
     terms: false,
   });
 
+  // Prefill from saved signup draft (so logout doesn't lose entered name/designation)
+  useEffect(() => {
+    try {
+      const savedName = localStorage.getItem("signup_fullName");
+      const savedOrg = localStorage.getItem("signup_organization");
+      const savedRole = localStorage.getItem("signup_role");
+      setForm((f) => ({
+        ...f,
+        fullName: savedName || f.fullName,
+        organization: savedOrg || f.organization,
+        role: savedRole || f.role,
+      }));
+    } catch (e) {}
+  }, []);
+
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    // persist name/organization/role to allow signup draft to survive logout
+    if (name === "fullName") localStorage.setItem("signup_fullName", value);
+    if (name === "organization") localStorage.setItem("signup_organization", value);
+    if (name === "role") localStorage.setItem("signup_role", value);
     setForm({
       ...form,
       [name]: type === "checkbox" ? checked : value,
     });
   };
-
-  /* ================= PASSWORD STRENGTH ================= */
 
   const getStrength = () => {
     let strength = 0;
@@ -53,19 +67,13 @@ const Signup = () => {
     if (strength >= 4) return "Strong";
   };
 
-  /* ================= VALIDATION ================= */
-
   const validatePassword = (password) => {
     const strongPassword =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
     return strongPassword.test(password);
   };
 
-<<<<<<< HEAD
   const handleSubmit = async (e) => {
-=======
-  const handleSubmit = (e) => {
->>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
     e.preventDefault();
 
     if (!form.email.endsWith("@gmail.com")) {
@@ -90,9 +98,7 @@ const Signup = () => {
       return;
     }
 
-<<<<<<< HEAD
     try {
-      console.log("Registering at:", `${API_URL}/register`);
       const response = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: {
@@ -115,7 +121,6 @@ const Signup = () => {
         return;
       }
 
-      // Store user data in localStorage
       const fullUserData = {
         id: data.user.id,
         email: data.user.email,
@@ -125,10 +130,9 @@ const Signup = () => {
         role: data.user.role,
         employee_id: data.user.employee_id,
         clearance_level: data.user.clearance_level,
-        last_login: data.user.last_login
+        last_login: data.user.last_login,
       };
-      
-      console.log("Signup data to store:", fullUserData);
+
       localStorage.setItem("user", JSON.stringify(fullUserData));
       localStorage.setItem("email", form.email);
       localStorage.setItem("access_token", `token-${form.email}`);
@@ -137,30 +141,20 @@ const Signup = () => {
       alert("Account Created Successfully 🚀");
       navigate("/");
     } catch (err) {
-      console.error("Registration error:", err);
       setError("Failed to connect to server: " + err.message);
     }
-=======
-    setError("");
-    alert("Account Created Successfully 🚀");
-    navigate("/");
->>>>>>> e078af6b1b0fa6fbdfb4f7fbcad5fe841b84b186
   };
 
   return (
     <div className="login-container">
       <div className="login-card">
-
         <div className="brand-section">
           <div className="logo-glow">🛡️</div>
           <div className="brand-name">UpGuard</div>
-          <div className="tagline">
-            Zero Trust. Total Control.
-          </div>
+          <div className="tagline">Zero Trust. Total Control.</div>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
-
           <input
             type="text"
             name="fullName"
@@ -210,7 +204,6 @@ const Signup = () => {
             <option value="Security Analyst">Security Analyst</option>
           </select>
 
-          {/* PASSWORD FIELD */}
           <input
             type="password"
             name="password"
@@ -220,7 +213,6 @@ const Signup = () => {
             required
           />
 
-          {/* 🔥 STRENGTH METER */}
           {form.password && (
             <div className="strength-container">
               <div className={`strength-bar strength-${strength}`}></div>
@@ -261,7 +253,6 @@ const Signup = () => {
             Login
           </span>
         </div>
-
       </div>
     </div>
   );
